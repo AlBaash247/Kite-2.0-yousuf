@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link href="./css/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <style>
+        .modal-form {
+            display: flex;
+            flex-flow: column;
+            padding-bottom: 12px;
+            gap: 16px;
+        }
+
+        textarea {
+            min-width: 300px;
+            min-height: 100px;
+            max-width: 300px;
+            max-height: 300px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <div class="topnav" id="myTopnav">
+        <a href="index.html" class="active">Kite</a>
+        <a href="index.html">Tasks</a>
+        <a href="./pages/quick-tasks.html">Quick-Tasks</a>
+        <a href="./pages/profile.html">Profile</a>
+        <a href="./pages/login.html">Login</a>
+        <a href="./pages/register.html">Register</a>
+
+        <a href="javascript:void(0);" class="icon">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+
+    <div class="main-container">
+        <div class="flex row justify-between w-100">
+            <h1 class="primary">Tasks</h1>
+
+            <button id="btnAddTask"
+                onclick="document.getElementById('createTaskModal').style.display='block'">+</button>
+        </div>
+
+        <div class="main-tasks-container">
+            <div class="card tasks-container"></div>
+            <div class="card tasks-container"></div>
+            <div class="card tasks-container"></div>
+            <div class="card tasks-container"></div>
+            <div class="card tasks-container"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CREATE TASK MODEL -->
+    <div id="createTaskModal" class="w3-modal">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container">
+                <span onclick="document.getElementById('createTaskModal').style.display='none'"
+                    class="w3-button w3-display-topright">&times;</span>
+                <h2 class="primary">Create Task</h2>
+            </header>
+            <div class="w3-container">
+
+                <div class="modal-form">
+
+                    <div class="input-group">
+                        <label for="inputCategory">Category</label>
+                        <select id="inputCategory">
+                            <option value="1">Log</option>
+                            <option value="2">Todo</option>
+                            <option value="3">In Progress</option>
+                            <option value="4">Review</option>
+                            <option value="5">Done</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputName">Name</label>
+                        <input id="inputName" type="text">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputDescription">Description</label>
+                        <textarea id="inputDescription"> </textarea>
+                    </div>
+
+
+                    <div class="link-group">
+                        <button
+                            onclick="document.getElementById('createTaskModal').style.display='none'">Cancel</button>
+                        <button id="btnSubmit">Save</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- UPDATE TASK MODEL -->
+    <div id="updateTaskModal" class="w3-modal">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container">
+                <span onclick="document.getElementById('updateTaskModal').style.display='none'"
+                    class="w3-button w3-display-topright">&times;</span>
+                <h2 class="primary">update Task</h2>
+            </header>
+            <div class="w3-container">
+
+                <div class="modal-form">
+
+                    <div class="input-group">
+                        <label for="inputId">Id</label>
+                        <input id="inputId" type="text" readonly>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputCategory">Category</label>
+                        <select id="inputCategory">
+                            <option value="1">Log</option>
+                            <option value="2">Todo</option>
+                            <option value="3">In Progress</option>
+                            <option value="4">Review</option>
+                            <option value="5">Done</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputName">Name</label>
+                        <input id="inputName" type="text">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputDescription">Description</label>
+                        <textarea id="inputDescription"> </textarea>
+                    </div>
+
+
+                    <div class="link-group">
+                        <button
+                            onclick="document.getElementById('updateTaskModal').style.display='none'">Cancel</button>
+                        <button id="btnSubmit">Save</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./js/index.js" type="module"></script>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
