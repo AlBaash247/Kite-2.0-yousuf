@@ -28,16 +28,32 @@ body {
 }
 
 .primary {
-    color: var(--accent3-color)
+    color: var(--primary-color)
 }
 
 .bg-accent2{
     background-color: var(--accent2-color);
 }
 
-
+.accent {
+    color: var(--accent-color)
+}
 .accent2 {
     color: var(--accent2-color)
+}
+
+.accent3 {
+    color: var(--accent3-color);
+}
+
+.text-desc{
+    color: #777;
+    font-size: small;
+}
+
+.icon-24{
+    width: 24px;
+    height: 24px;
 }
 
 .flex {
@@ -58,6 +74,10 @@ body {
 
 .justify-between{
     justify-content: space-around;
+}
+
+.justify-end{
+    justify-content: end;
 }
 
 .align-center {
@@ -164,7 +184,21 @@ body {
     border: 1px solid var(--accent3-color);
 }
 
+.btn{
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+}
 
+.btn:hover{
+    scale: 1.09;
+    box-shadow: 0 2px 4px 0 silver;
+}
+
+.btn-transparent{
+    outline: none;
+    border: none;
+    background: none;
+}
 
 
 /* NAV BAR */
