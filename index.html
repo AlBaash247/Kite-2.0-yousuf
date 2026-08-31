@@ -32,8 +32,8 @@
                 <a class="nav-link" href="team.html" data-label="Team"><span>♧</span>Team</a>
                 <a class="nav-link" href="messages.html" data-label="Messages"><span>▢</span>Messages <b
                         class="count">3</b></a>
-                <a class="nav-link" href="reports.html" data-label="Reports"><span>♧</span>Reports</a>
                 <a class="nav-link" href="profile.html" data-label="Profile"><span>♙</span>Profile</a>
+                <a class="nav-link" href="reports.html" data-label="Reports"><span>♧</span>Reports</a>
                 <a class="nav-link" href="settings.html" data-label="Settings"><span>⚙</span>Settings</a>
             </nav>
 
@@ -99,7 +99,7 @@
             </section>
 
             <!-- Task board -->
-            <section class="task-board" aria-label="Task board">
+            <section id="taskBoard" class="task-board" aria-label="Task board">
 
                 <!-- ========== LOG ========== -->
                 <article class="task-column column-log" data-category="log">
@@ -118,8 +118,8 @@
                         </button>
                     </header>
 
-                    <div class="task-list" id="logTasks" data-task-list="log"><button type="button" class="board-task"
-                            data-task-id="1" fdprocessedid="u6plsr">
+                    <div class="task-list" id="logTasks" data-task-list="log">
+                        <button type="button" class="board-task" data-task-id="1" fdprocessedid="u6plsr">
                             <span class="board-task-icon">
                                 ◇
                             </span>
@@ -135,7 +135,8 @@
                             <span class="board-task-arrow">
                                 ›
                             </span>
-                        </button></div>
+                        </button>
+                    </div>
                 </article>
 
                 <!-- ========== TODO ========== -->
@@ -172,9 +173,10 @@
                             <span class="board-task-arrow">
                                 ›
                             </span>
-                        </button></div>
+                        </button>
+                    </div>
                 </article>
-                
+
                 <!-- ========== IN PROGRESS ========== -->
                 <article class="task-column column-progress" data-category="progress">
                     <header class="task-column-header">
@@ -192,8 +194,8 @@
                         </button>
                     </header>
 
-                    <div class="task-list" id="progressTasks" data-task-list="progress"><button type="button" class="board-task"
-                            data-task-id="1" fdprocessedid="u6plsr">
+                    <div class="task-list" id="progressTasks" data-task-list="progress">
+                        <button type="button" class="board-task" data-task-id="1" fdprocessedid="u6plsr">
                             <span class="board-task-icon">
                                 ◇
                             </span>
@@ -209,9 +211,10 @@
                             <span class="board-task-arrow">
                                 ›
                             </span>
-                        </button></div>
+                        </button>
+                    </div>
                 </article>
-                
+
                 <!-- ========== Review ========== -->
                 <article class="task-column column-review" data-category="review">
                     <header class="task-column-header">
@@ -229,8 +232,8 @@
                         </button>
                     </header>
 
-                    <div class="task-list" id="reviewTasks" data-task-list="review"><button type="button" class="board-task"
-                            data-task-id="1" fdprocessedid="u6plsr">
+                    <div class="task-list" id="reviewTasks" data-task-list="review">
+                        <button type="button" class="board-task" data-task-id="1" fdprocessedid="u6plsr">
                             <span class="board-task-icon">
                                 ◇
                             </span>
@@ -246,9 +249,10 @@
                             <span class="board-task-arrow">
                                 ›
                             </span>
-                        </button></div>
+                        </button>
+                    </div>
                 </article>
-                
+
                 <!-- ========== Complete ========== -->
                 <article class="task-column column-complete" data-category="complete">
                     <header class="task-column-header">
@@ -266,8 +270,8 @@
                         </button>
                     </header>
 
-                    <div class="task-list" id="completeTasks" data-task-list="complete"><button type="button" class="board-task"
-                            data-task-id="1" fdprocessedid="u6plsr">
+                    <div class="task-list" id="completeTasks" data-task-list="complete">
+                        <button type="button" class="board-task" data-task-id="1" fdprocessedid="u6plsr">
                             <span class="board-task-icon">
                                 ◇
                             </span>
@@ -283,12 +287,184 @@
                             <span class="board-task-arrow">
                                 ›
                             </span>
-                        </button></div>
+                        </button>
+                    </div>
                 </article>
 
             </section>
         </main>
+
+        <!-- TASK MODAL -->
+        <div class="task-modal-overlay" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+            <section class="task-modal">
+
+                <header class="task-modal-header">
+                    <div>
+                        <small id="modalEyebrow">EDIT TASK</small>
+                        <h2 id="modalTitle">Update A Task</h2>
+                    </div>
+
+                    <button class="modal-close-button" id="closeModalButton" type="button" aria-label="Close modal"
+                        fdprocessedid="rzewyc">
+                        ×
+                    </button>
+                </header>
+
+                <form class="task-form" id="taskForm">
+
+                    <!-- Category appears when updating a task -->
+                    <div class="task-form-group" id="categoryField">
+                        <label for="taskCategory">Category</label>
+
+                        <div class="task-form-control">
+                            <select id="taskCategory" name="taskCategory" fdprocessedid="4at4nt">
+                                <option value="log">Log</option>
+                                <option value="todo">To Do</option>
+                                <option value="progress">In Progress</option>
+                                <option value="review">Review</option>
+                                <option value="complete">Complete</option>
+                            </select>
+
+                            <span>⌄</span>
+                        </div>
+                    </div>
+
+                    <!-- Task name -->
+                    <div class="task-form-group">
+                        <label for="taskName">Task Name</label>
+
+                        <div class="task-form-control">
+                            <input id="taskName" name="taskName" type="text" placeholder="Enter the task name"
+                                maxlength="80" required="" fdprocessedid="sirpg">
+                        </div>
+                    </div>
+
+                    <!-- Task description -->
+                    <div class="task-form-group">
+                        <label for="taskDescription">
+                            Task Description
+                        </label>
+
+                        <div class="task-form-control textarea-control">
+                            <textarea id="taskDescription" name="taskDescription" placeholder="Describe the task..."
+                                maxlength="500" rows="6" required=""></textarea>
+                        </div>
+
+                        <small class="character-count">
+                            <span id="descriptionCount">57</span>/500
+                        </small>
+                    </div>
+
+                    <!-- Form buttons -->
+                    <div class="task-modal-actions">
+
+                        <button class="delete-task-button" id="deleteTaskButton" type="button" fdprocessedid="ci5czc">
+                            Delete
+                        </button>
+
+                        <button class="cancel-task-button" id="cancelModalButton" type="button" fdprocessedid="zvyibb">
+                            Cancel
+                        </button>
+
+                        <button class="save-task-button" id="saveTaskButton" type="submit" fdprocessedid="yfr7u5">Update
+                            A Task
+                        </button>
+
+                    </div>
+                </form>
+            </section>
+        </div>
     </div>
+
+    <template class="task-list" id="taskTemplate" data-task-list="log">
+        <button type="button" class="board-task" data-task-id="1" fdprocessedid="u6plsr">
+            <span class="board-task-icon">
+                ◇
+            </span>
+
+            <span class="board-task-content">
+                <strong>Client requirements received</strong>
+
+                <small>
+                    Record the initial requirements received from the client.
+                </small>
+            </span>
+
+            <span class="board-task-arrow">
+                ›
+            </span>
+        </button>
+    </template>
+
+    <script>
+        // One source of truth for the visible category title and icon.
+        const categories = {
+            log: { title: "Log", icon: "◇", color: "#8b95a7", color2: "#686f7a" },
+            todo: { title: "To Do", icon: "○", color: "#6973ff", color2: "#5864ee" },
+            progress: { title: "In Progress", icon: "◐", color: "#f3a63b", color2: "#ab772f" },
+            review: { title: "Review", icon: "◉", color: "#b268e5", color2: "#8336b5" },
+            complete: { title: "Complete", icon: "✓", color: "#19b979", color2: "#1d885d" }
+        };
+
+        const tasksPage = document.querySelector(".tasks-page");
+        const taskTemplate = document.querySelector("#taskTemplate");
+        const taskModal = document.querySelector("#taskModal");
+        const taskForm = document.querySelector("#taskForm");
+        const taskCategory = document.querySelector("#taskCategory");
+        const taskName = document.querySelector("#taskName");
+        const taskDescription = document.querySelector("#taskDescription");
+        const descriptionCount = document.querySelector("#descriptionCount");
+        const categoryField = document.querySelector("#categoryField");
+        const deleteTaskButton = document.querySelector("#deleteTaskButton");
+        const createTaskButton = document.querySelector("#createTaskButton");
+        const closeModalButton = document.querySelector("#closeModalButton");
+        const cancelModalButton = document.querySelector("#cancelModalButton");
+
+        const createBtns = document.querySelectorAll("[data-add-category]");
+
+        let selectedCategory = "todo";
+
+        createTaskButton.addEventListener("click", () => {
+            openCreateModal("log", false);
+        }); 
+
+        createBtns.forEach(button => {
+            button.addEventListener("click", () => {
+                openCreateModal(button.dataset.addCategory, true);
+            });
+        });
+
+        closeModalButton.addEventListener("click", closeModal);
+        cancelModalButton.addEventListener("click", closeModal);
+
+        function openCreateModal(category = "todo", lockCategory = false) {
+            selectedCategory = category;
+            taskForm.reset();
+            taskCategory.value = category;
+            categoryField.hidden = lockCategory;
+            deleteTaskButton.hidden = true;
+
+            document.querySelector("#modalEyebrow").textContent = `${category}`;
+            document.querySelector("#modalEyebrow").style.color = `${categories[category].color}`;
+            document.querySelector("#modalTitle").textContent = `Create a Task`;
+            document.querySelector("#saveTaskButton").textContent = "Create Task";
+            document.querySelector("#saveTaskButton").style.background = `linear-gradient(145deg, ${categories[category].color}, ${categories[category].color2})`;
+
+            descriptionCount.textContent = "0";
+
+            tasksPage.classList.add("task-modal-open");
+            taskModal.hidden = false;
+            taskModal.classList.add("show");
+            taskName.focus();
+        }
+
+        function closeModal() {
+            taskModal.hidden = true;
+            taskModal.classList.remove("show");
+        }
+
+
+    </script>
 </body>
 
 </html>
