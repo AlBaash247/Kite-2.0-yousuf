@@ -201,6 +201,21 @@ body {
 }
 
 
+
+        .modal-form {
+            display: flex;
+            flex-flow: column;
+            padding-bottom: 12px;
+            gap: 16px;
+        }
+
+        textarea {
+            min-width: 300px;
+            min-height: 100px;
+            max-width: 300px;
+            max-height: 300px;
+        }
+
 /* NAV BAR */
 /* Add a black background color to the top navigation */
 
