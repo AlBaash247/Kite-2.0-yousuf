@@ -45,6 +45,7 @@
             let task = new Task(id, category, name, desc);
             tasksList.push(task);
 
+            document.getElementById('createTaskModal').style.display = 'none';
 
             createTaskCard()
         }
@@ -67,6 +68,7 @@
 
             }
 
+            document.getElementById('updateTaskModal').style.display = 'none';
 
             createTaskCard()
         }
