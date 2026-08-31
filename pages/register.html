@@ -4,138 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account - Softly</title>
+    <title>Register</title>
+    <link href="../css/main.css" rel="stylesheet" />
 
-    <!-- Inter font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- The same stylesheet used by the dashboard -->
-    <link rel="stylesheet" href="../css/main.css">
+    </style>
+
+
 </head>
 
-<body>  
+<body>
 
-    <body class="simple-form-page">
-        <!-- Theme switcher -->
-        <button class="icon-button form-theme-button" id="themeToggle" type="button" aria-label="Switch to dark theme">
-            ☾
-        </button>
-
-        <main class="simple-form-container">
-            <section class="simple-form-card">
-
-                <!-- Logo -->
-                <a class="logo" href="#" aria-label="Softly home">
-                    <span class="brand-mark">
-                        <i></i>
-                        <i></i>
-                    </span>
-
-                    <strong>Softly.</strong>
-                </a>
-
-                <!-- Heading -->
-                <header class="simple-form-header">
-                    <h1>Create account</h1>
-
-                    <p> Enter your details to create your Softly account.
-                    </p>
-                </header>
-
-                <!-- Registration form -->
-                <form class="simple-register-form" id="registerForm">
-
-                    <!-- Name field -->
-                    <div class="simple-field">
-                        <label for="name">Full name</label>
-
-                        <div class="simple-form-input">
-                            <span class="field-icon">♙</span>
-                            <input id="fullName" name="fullName" type="text" placeholder="Enter your full name"
-                                autocomplete="name" minlength="2" required>
-                        </div>
-                    </div>
-
-                    <!-- Email field -->
-                    <div class="simple-field">
-                        <label for="registerEmail">Email address</label>
-
-                        <div class="simple-form-input">
-                            <span class="field-icon">@</span>
-                            <input type="email" id="registerEmail" name="registerEmail" placeholder="Enter your email"
-                                autocomplete="email" required>
-                        </div>
-                    </div>
-
-                    <!-- Password field -->
-                    <div class="simple-field">
-                        <label for="registerPassword">Password</label>
-
-                        <div class="simple-form-input">
-                            <span class="field-icon">◇</span>
-                            <input id="registerPassword" name="registerPassword" type="password"
-                                placeholder="Enter your password" autocomplete="current-password" minlength="6"
-                                required>
-
-                            <button class="show-password-button" id="showPasswordButton" type="button"
-                                aria-label="Show password">
-                                ◉
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Confirm password field -->
-                    <div class="simple-field">
-                        <label for="registerConfirmPassword">Confirm password</label>
-
-                        <div class="simple-form-input">
-                            <span class="field-icon">◇</span>
-                            <input id="registerConfirmPassword" name="registerConfirmPassword" type="password"
-                                placeholder="Confirm your password" autocomplete="current-password" minlength="6"
-                                required>
-
-                            <button class="show-password-button" id="showConfirmPasswordButton" type="button"
-                                data-password-target="registerConfirmPassword" aria-label="Show password">
-                                ◉
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Password error -->
-                    <small id="registerPasswordError" class="registration-error" role="alert"></small>
-
-                    <!-- Terms and conditions -->
-                    <label class="remember-option register-terms">
-                        <input id="terms" name="terms" type="checkbox" required>
-
-                        <span>
-                            I agree to the
-                            <a href="#">Terms of Service</a>
-                            and
-                            <a href="#">Privacy Policy</a>
-                        </span>
-                    </label>
-
-                    <!-- Submit button -->
-                    <button class="btn simple-form-submit" type="submit">
-                        Create account
-                    </button>
-                </form>
+    <div class=" main-container">
 
 
-                <!-- Login link -->
-                <p class="simple-create-account">
-                    Already have an account?
-                    <a href="login.html">Sign in</a>
-                </p>
+        <div class="card content-container gap-16">
 
-            </section>
-        </main>
+            <div class="head-container">
+                <h1 class="primary">Register</h1>
+            </div>
 
-        <script src="../js/script.js"></script>
-        <script src="../js/register.js"></script>
-    </body>
+            <div class="input-group">
+                <label for="inputName">Name</label>
+                <input id="inputName" type="text">
+            </div>
+
+            <div class="input-group">
+                <label for="inputEmail">Email</label>
+                <input id="inputEmail" type="email">
+            </div>
+
+            <div class="input-group">
+                <label for="inputPassword">Password</label>
+                <input id="inputPassword" type="password">
+            </div>
+
+            <div class="input-group">
+                <button id="btnRegister"> Register </button>
+            </div>
+
+            <div class="link-group">
+                <p>already have an Account?</p>
+                <a href="">Register</a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/login.js" type="module"></script>
+    
+</body>
 
 </html>
