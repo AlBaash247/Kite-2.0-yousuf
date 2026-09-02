@@ -1,0 +1,26 @@
+
+export const BASE_URL = "https://albaash247.cloud/api";
+
+export const METHOD_GET = "GET";
+export const METHOD_POST = "POST";
+export const METHOD_PUT = "PUT";
+export const METHOD_DELETE = "DELETE";
+
+export function getHeaders(method, data){
+    // 'Authorization': 'Bearer ' + localStorage.getItem(STORAGE_KEY_TOKEN)
+
+    let headerObject = {
+        method: method,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+
+        },
+
+    }
+
+    if(method !== METHOD_GET){
+        headerObject.body =  new URLSearchParams(data)
+    }
+    
+    return headerObject;
+}
