@@ -1,4 +1,4 @@
-import { BASE_URL, getHeaders, METHOD_POST } from '../common/api.js';
+import { BASE_URL, fetchApiData, getHeaders, METHOD_GET, METHOD_POST, STORAGE_KEY_TOKEN } from '../common/api.js';
 
 let inputEmail = document.getElementById("inputEmail");
 let inputName = document.getElementById("inputName");
@@ -10,18 +10,11 @@ btnPing.onclick = apiRequestPing
 btnRegister.onclick = register
 
 async function apiRequestPing() {
-    let api_url = `${BASE_URL}/auth/ping`;
+    let url = "/auth/ping";
 
-    let response = await fetch(api_url);
+    let result = await fetchApiData(METHOD_GET, url, null);
 
-    if (!response.ok) {
-        alert("what have u done looser!!! ");
-        return;
-    }
-
-    let jsonResponse = await response.json();
-
-    alert(JSON.stringify(jsonResponse));
+    alert(JSON.stringify(result));
 }
 
 function isFormValid() {
@@ -71,7 +64,8 @@ function register() {
 }
 
 async function apiRequestRegister() {
-    let api_url = `${BASE_URL}/auth/register`;
+
+    const url = "/auth/register";
 
     let data = {
         name: inputName.value,
@@ -80,18 +74,16 @@ async function apiRequestRegister() {
         c_password: inputPassword.value
     }
 
+    let result = await fetchApiData(METHOD_POST, url, data);
 
-    let response = await fetch(api_url, getHeaders(METHOD_POST, data));
-
-
-    if (!response.ok) {
-        alert("what have u done looser!!! ");
-        return;
+    if(result.success){
+    // after successful registration, open index.html
+    window.open("../index.html");
+    }
+    else{
+        alert("Something went wrong with you!!!!");
     }
 
-    let jsonResponse = await response.json();
 
-    alert(JSON.stringify(jsonResponse));
 }
-
 
