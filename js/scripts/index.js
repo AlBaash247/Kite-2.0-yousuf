@@ -1,4 +1,5 @@
         import { Task } from "../common/task.js";
+import { BASE_URL, fetchApiData, getHeaders, METHOD_GET, METHOD_POST, STORAGE_KEY_TOKEN } from '../common/api.js';
 
         let logTasksContainer = document.getElementById("logTasksContainer");
         let todoTasksContainer = document.getElementById("todoTasksContainer");
@@ -21,150 +22,193 @@
         let btnSubmitUpdate = document.getElementById("btnSubmitUpdate");
 
 
-        btnSubmit.onclick = addTaskToTaskList
+btnSubmit.onclick = apiRequestTaskCreate
 
-        btnSubmitUpdate.onclick = updateTaskFromTaskList
-
-
-
-        // TODO: remove this later
-        let tempId = 0
-
-        let tasksList = [];
+btnSubmitUpdate.onclick = updateTaskFromTaskList
 
 
-        function addTaskToTaskList() {
 
-            let id = tempId + 1;
-            tempId++;
+// TODO: remove this later
+let tempId = 0
 
-            let category = parseInt(inputCategory.value);
-            let name = inputName.value;
-            let desc = inputDesc.value;
+let tasksList = [];
 
-            let task = new Task(id, category, name, desc);
-            tasksList.push(task);
 
-            document.getElementById('createTaskModal').style.display = 'none';
+function addTaskToTaskList(data) {
+    let id = data.id;
+    let category = parseInt(data.task_category_id);
+    let name = data.name;
+    let desc = data.description;
 
-            createTaskCard()
+    let task = new Task(id, category, name, desc);
+    tasksList.push(task);
+
+    document.getElementById('createTaskModal').style.display = 'none';
+
+    createTaskCard()
+}
+
+
+function updateTaskFromTaskList() {
+
+    let id = parseInt(inputIdUpdate.value);
+    let category = parseInt(inputCategoryUpdate.value);
+    let name = inputNameUpdate.value;
+    let desc = inputDescUpdate.value;
+
+    let task = new Task(id, category, name, desc);
+
+    for (let index = 0; index < tasksList.length; index++) {
+
+        if (tasksList[index].id === task.id) {
+            tasksList[index] = task;
+        }
+
+    }
+
+    document.getElementById('updateTaskModal').style.display = 'none';
+
+    createTaskCard()
+}
+
+
+function createTaskCard() {
+    // cleanup the containers, so that we don't have duplicate entries
+    logTasksContainer.innerHTML = "";
+    todoTasksContainer.innerHTML = "";
+    inProgressTasksContainer.innerHTML = "";
+    reviewTasksContainer.innerHTML = "";
+    doneTasksContainer.innerHTML = "";
+
+    tasksList.forEach(task => {
+
+
+        let clone = templateTaskCard.content.cloneNode(true);
+        let taskCard = clone.getElementById("taskCard");
+        let taskCardBtnUpdate = clone.getElementById("taskCardBtnUpdate");
+        let taskCardBtnDelete = clone.getElementById("taskCardBtnDelete");
+        let taskCardName = clone.getElementById("taskCardName");
+        let taskCardDesc = clone.getElementById("taskCardDesc");
+
+        taskCardName.innerText = `(${task.id}) ${task.name}`;
+        taskCardDesc.innerText = task.description;
+
+
+        taskCardBtnUpdate.onclick = function () {
+            showUpdateModal(task);
+        }
+
+        taskCardBtnDelete.onclick = function () {
+            deleteTask(task);
         }
 
 
-        function updateTaskFromTaskList() {
 
-            let id = parseInt(inputIdUpdate.value);
-            let category = parseInt(inputCategoryUpdate.value);
-            let name = inputNameUpdate.value;
-            let desc = inputDescUpdate.value;
+        switch (parseInt(task.category)) {
+            case 1:
+                logTasksContainer.appendChild(clone);
+                break;
+            case 2:
+                todoTasksContainer.appendChild(clone);
+                break;
+            case 3:
+                inProgressTasksContainer.appendChild(clone);
+                break;
+            case 4:
+                reviewTasksContainer.appendChild(clone);
+                break;
+            case 5:
+                doneTasksContainer.appendChild(clone);
+                break;
 
-            let task = new Task(id, category, name, desc);
+            default:
+                break;
+        }
 
-            for (let index = 0; index < tasksList.length; index++) {
 
-                if (tasksList[index].id === task.id) {
-                    tasksList[index] = task;
-                }
 
+    });
+
+    console.log("tasks list", tasksList);
+
+
+}
+
+
+
+function showUpdateModal(task) {
+
+    inputIdUpdate.value = task.id;
+    inputCategoryUpdate.value = task.category;
+    inputNameUpdate.value = task.name;
+    inputDescUpdate.value = task.description;
+
+    document.getElementById('updateTaskModal').style.display = 'block';
+}
+
+function deleteTask(task) {
+
+    // Trigger the dialog box
+    const userConfirmed = window.confirm(`Are you sure you want to delete this task : (${task.id}) ${task.name}?`);
+
+    // Handle the user's choice
+    if (userConfirmed) {
+
+        for (let index = 0; index < tasksList.length; index++) {
+
+            if (tasksList[index].id === task.id) {
+                tasksList.splice(index, 1);
             }
 
-            document.getElementById('updateTaskModal').style.display = 'none';
-
-            createTaskCard()
         }
 
-
-        function createTaskCard() {
-            // cleanup the containers, so that we don't have duplicate entries
-            logTasksContainer.innerHTML = "";
-            todoTasksContainer.innerHTML = "";
-            inProgressTasksContainer.innerHTML = "";
-            reviewTasksContainer.innerHTML = "";
-            doneTasksContainer.innerHTML = "";
-
-            tasksList.forEach(task => {
-
-
-                let clone = templateTaskCard.content.cloneNode(true);
-                let taskCard = clone.getElementById("taskCard");
-                let taskCardBtnUpdate = clone.getElementById("taskCardBtnUpdate");
-                let taskCardBtnDelete = clone.getElementById("taskCardBtnDelete");
-                let taskCardName = clone.getElementById("taskCardName");
-                let taskCardDesc = clone.getElementById("taskCardDesc");
-
-                taskCardName.innerText = `(${task.id}) ${task.name}`;
-                taskCardDesc.innerText = task.description;
-
-
-                taskCardBtnUpdate.onclick = function () {
-                    showUpdateModal(task);
-                }
-
-                taskCardBtnDelete.onclick = function () {
-                    deleteTask(task);
-                }
+        createTaskCard();
+    }
+}
 
 
 
-                switch (parseInt(task.category)) {
-                    case 1:
-                        logTasksContainer.appendChild(clone);
-                        break;
-                    case 2:
-                        todoTasksContainer.appendChild(clone);
-                        break;
-                    case 3:
-                        inProgressTasksContainer.appendChild(clone);
-                        break;
-                    case 4:
-                        reviewTasksContainer.appendChild(clone);
-                        break;
-                    case 5:
-                        doneTasksContainer.appendChild(clone);
-                        break;
+async function apiRequestTaskCreate() {
 
-                    default:
-                        break;
-                }
+    const url = "/tasks";
 
+    let data = {
+        name: inputName.value,
+        description: inputDesc.value,
+        done: 0,
+        task_category_id: parseInt(inputCategory.value),
+    }
 
+    let result = await fetchApiData(METHOD_POST, url, data);
 
-            });
+    if (result.success) {
+        addTaskToTaskList(result.data)
+    }
+    else {
+        alert("Something went wrong with you!!!!");
+    }
 
-            console.log("tasks list", tasksList);
+}
 
+apiRequestTaskIndex();
 
-        }
+async function apiRequestTaskIndex() {
 
+    const url = "/tasks";
 
+    let data = null
 
-        function showUpdateModal(task) {
+    let result = await fetchApiData(METHOD_GET, url, data);
 
-            inputIdUpdate.value = task.id;
-            inputCategoryUpdate.value = task.category;
-            inputNameUpdate.value = task.name;
-            inputDescUpdate.value = task.description;
+    if (result.success) {
 
-            document.getElementById('updateTaskModal').style.display = 'block';
-        }
+        result.data.forEach(task => {
+            addTaskToTaskList(task) 
+        });
 
-        function deleteTask(task) {
+    }
+    else {
+        alert("Something went wrong with you!!!!");
+    }
 
-            // Trigger the dialog box
-            const userConfirmed = window.confirm(`Are you sure you want to delete this task : (${task.id}) ${task.name}?`);
-
-            // Handle the user's choice
-            if (userConfirmed) {
-
-                for (let index = 0; index < tasksList.length; index++) {
-
-                    if (tasksList[index].id === task.id) {
-                        tasksList.splice(index, 1);
-                    }
-
-                }
-
-                createTaskCard();
-            }
-        }
-
+}
