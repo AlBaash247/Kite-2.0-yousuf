@@ -1,5 +1,5 @@
         import { Task } from "../common/task.js";
-import { BASE_URL, fetchApiData, getHeaders, METHOD_GET, METHOD_POST, STORAGE_KEY_TOKEN } from '../common/api.js';
+        import { BASE_URL, fetchApiData, getHeaders, METHOD_GET, METHOD_POST, METHOD_PUT, STORAGE_KEY_TOKEN } from '../common/api.js';
 
         let logTasksContainer = document.getElementById("logTasksContainer");
         let todoTasksContainer = document.getElementById("todoTasksContainer");
@@ -24,7 +24,7 @@ import { BASE_URL, fetchApiData, getHeaders, METHOD_GET, METHOD_POST, STORAGE_KE
 
 btnSubmit.onclick = apiRequestTaskCreate
 
-btnSubmitUpdate.onclick = updateTaskFromTaskList
+btnSubmitUpdate.onclick = apiRequestTaskUpdate
 
 
 
@@ -49,37 +49,19 @@ function addTaskToTaskList(data) {
 }
 
 
-function updateTaskFromTaskList() {
-
-    let id = parseInt(inputIdUpdate.value);
-    let category = parseInt(inputCategoryUpdate.value);
-    let name = inputNameUpdate.value;
-    let desc = inputDescUpdate.value;
-
-    let task = new Task(id, category, name, desc);
-
-    for (let index = 0; index < tasksList.length; index++) {
-
-        if (tasksList[index].id === task.id) {
-            tasksList[index] = task;
-        }
-
-    }
+function updateTaskFromTaskList(data) {
 
     document.getElementById('updateTaskModal').style.display = 'none';
 
-    createTaskCard()
+
+    apiRequestTaskIndex()
+
+
 }
 
 
 function createTaskCard() {
-    // cleanup the containers, so that we don't have duplicate entries
-    logTasksContainer.innerHTML = "";
-    todoTasksContainer.innerHTML = "";
-    inProgressTasksContainer.innerHTML = "";
-    reviewTasksContainer.innerHTML = "";
-    doneTasksContainer.innerHTML = "";
-
+    cleanup();
     tasksList.forEach(task => {
 
 
@@ -129,7 +111,7 @@ function createTaskCard() {
 
     });
 
-    console.log("tasks list", tasksList);
+    // console.log("tasks list", tasksList);
 
 
 }
@@ -166,7 +148,15 @@ function deleteTask(task) {
     }
 }
 
+function cleanup() {
+    // clean up the containers, so that we don't have duplicate entries
+    logTasksContainer.innerHTML = "";
+    todoTasksContainer.innerHTML = "";
+    inProgressTasksContainer.innerHTML = "";
+    reviewTasksContainer.innerHTML = "";
+    doneTasksContainer.innerHTML = "";
 
+}
 
 async function apiRequestTaskCreate() {
 
@@ -189,7 +179,7 @@ async function apiRequestTaskCreate() {
     }
 
 }
-
+   
 apiRequestTaskIndex();
 
 async function apiRequestTaskIndex() {
@@ -199,9 +189,8 @@ async function apiRequestTaskIndex() {
     let data = null
 
     let result = await fetchApiData(METHOD_GET, url, data);
-
     if (result.success) {
-
+        tasksList = [];
         result.data.forEach(task => {
             addTaskToTaskList(task) 
         });
@@ -212,3 +201,28 @@ async function apiRequestTaskIndex() {
     }
 
 }
+
+
+async function apiRequestTaskUpdate() {
+
+    const url = `/tasks/${inputIdUpdate.value}`;
+
+    let data = {
+        id: inputIdUpdate.value,
+        name: inputNameUpdate.value,
+        description: inputDescUpdate.value,
+        done: 0,
+        task_category_id: parseInt(inputCategoryUpdate.value),
+    }
+
+    let result = await fetchApiData(METHOD_PUT, url, data);
+
+    if (result.success) {
+       updateTaskFromTaskList(result.data)
+    }
+    else {
+        alert("Something went wrong with you!!!!");
+    }
+
+}
+
