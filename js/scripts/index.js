@@ -27,10 +27,6 @@ btnSubmit.onclick = apiRequestTaskCreate
 btnSubmitUpdate.onclick = apiRequestTaskUpdate
 
 
-
-// TODO: remove this later
-let tempId = 0
-
 let tasksList = [];
 
 
